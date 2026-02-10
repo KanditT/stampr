@@ -1,19 +1,20 @@
 import { GoogleGenAI } from "@google/genai";
 import { StampStyle } from "../types";
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-
 export const generateStampLore = async (
   locationName: string,
   style: StampStyle,
 ): Promise<string> => {
   // Check if API key is valid before making the request
-  if (!process.env.API_KEY || process.env.API_KEY === "PLACEHOLDER_API_KEY") {
+  const apiKey = process.env.API_KEY;
+  
+  if (!apiKey || apiKey === "PLACEHOLDER_API_KEY") {
     console.warn("Gemini API Key is missing or invalid. Using fallback lore.");
     return `เสียงสะท้อนจากห้อง ${locationName} ในรูปแบบ ${style} ที่ยังคงก้องกังวานในใจ`;
   }
 
   try {
+    const ai = new GoogleGenAI({ apiKey });
     const response = await ai.models.generateContent({
       model: "gemini-3-flash-preview",
       contents: `You are the narrator for the "Heart of Music Museum". 
