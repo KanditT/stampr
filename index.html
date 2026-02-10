@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Heart of Music: Digital Composition Journal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Dancing+Script:wght@400;700&family=Prompt:wght@300;400;600&display=swap"
+      rel="stylesheet"
+      crossorigin="anonymous"
+    />
+    <style>
+      body {
+        font-family: "Prompt", sans-serif;
+        background-color: #f4ecd8;
+      }
+      .font-serif {
+        font-family: "Crimson Pro", serif;
+      }
+      .font-script {
+        font-family: "Dancing Script", cursive;
+      }
+      .font-thai {
+        font-family: "Prompt", sans-serif;
+      }
+
+      /* THE MUSICAL STAFF - 5 Horizontal Parallel Lines */
+      .staff-container {
+        position: relative;
+        width: 100%;
+        height: 80px; /* Height of one staff system */
+        margin-bottom: 40px;
+        background-image: linear-gradient(
+          to bottom,
+          transparent 19px,
+          #444 20px,
+          transparent 21px,
+          transparent 31px,
+          #444 32px,
+          transparent 33px,
+          transparent 43px,
+          #444 44px,
+          transparent 45px,
+          transparent 55px,
+          #444 56px,
+          transparent 57px,
+          transparent 67px,
+          #444 68px,
+          transparent 69px
+        );
+        background-size: 100% 80px;
+      }
+
+      .manuscript-paper {
+        background-color: #fff;
+        background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
+        background-size: 20px 20px;
+        padding: 60px 40px;
+        min-height: 700px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        border: 1px solid #d1d5db;
+      }
+
+      @media print {
+        .no-print {
+          display: none;
+        }
+      }
+    </style>
+    <script type="importmap">
+      {
+        "imports": {
+          "react": "https://esm.sh/react@^19.2.4",
+          "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+          "react/": "https://esm.sh/react@^19.2.4/",
+          "@google/genai": "https://esm.sh/@google/genai@^1.40.0",
+          "qrcode": "https://esm.sh/qrcode@1.5.3",
+          "html-to-image": "https://esm.sh/html-to-image@1.11.11"
+        }
+      }
+    </script>
+    <link rel="stylesheet" href="/index.css" />
+  </head>
+  <body class="overflow-x-hidden">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>

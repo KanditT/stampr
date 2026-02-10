@@ -1,0 +1,7 @@
+{
+  "name": "Stampr: Digital Explorer's Journal",
+  "description": "An interactive digital stamp book where you collect unique stamps by scanning QR codes at physical locations. Featuring AI-generated lore for every discovery.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
