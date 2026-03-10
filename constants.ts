@@ -72,7 +72,7 @@ export const LOCATIONS: Location[] = [
 
 export const STAMP_STYLES: StampStyle[] = ['Classical Manuscript', 'Jazz Lead Sheet', 'Golden Record'];
 
-export const STAMP_COLORS = ['#1c1917', '#2563eb', '#b45309', '#059669'];
+export const STAMP_COLORS = ['#9B5FE3', '#7C3AED', '#FFDE59', '#4ADE80'];
 
 export const BOOK_INIT_CODE = 'HEART_OF_MUSIC_START';
 

@@ -81,13 +81,13 @@ const QRScanner: React.FC<QRScannerProps> = ({ onScan, onClose }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black bg-opacity-90 p-4">
-      <div className="relative w-full max-w-md aspect-square rounded-2xl overflow-hidden border-4 border-white/20">
+      <div className="relative w-full max-w-md aspect-square rounded-2xl overflow-hidden border-4 border-dreamy-accent/30">
         {error ? (
-          <div className="flex flex-col items-center justify-center h-full p-8 text-center bg-zinc-900">
+          <div className="flex flex-col items-center justify-center h-full p-8 text-center bg-dreamy-overlay">
             <p className="text-red-400 mb-4">{error}</p>
-            <button 
+            <button
               onClick={onClose}
-              className="px-6 py-2 bg-white text-black rounded-full font-bold"
+              className="px-6 py-2 bg-dreamy-cta text-dreamy-text rounded-full font-bold"
             >
               Go Back
             </button>
@@ -108,9 +108,9 @@ const QRScanner: React.FC<QRScannerProps> = ({ onScan, onClose }) => {
         Align the QR code within the frame to scan
       </p>
 
-      <button 
+      <button
         onClick={onClose}
-        className="mt-8 px-8 py-3 bg-zinc-800 text-white rounded-full hover:bg-zinc-700 transition-colors"
+        className="mt-8 px-8 py-3 bg-dreamy-text-secondary text-white rounded-full hover:bg-dreamy-accent transition-colors"
       >
         Cancel
       </button>
@@ -122,7 +122,7 @@ const QRScanner: React.FC<QRScannerProps> = ({ onScan, onClose }) => {
             const code = prompt("Enter QR Code manually (e.g., STAMPR_START_2024 or loc_001):");
             if (code) onScan(code);
           }}
-          className="text-zinc-500 text-sm underline"
+          className="text-dreamy-border text-sm underline"
         >
           Debug: Manual Code Input
         </button>

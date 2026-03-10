@@ -1,1 +1,22 @@
 @import "tailwindcss";
+
+@theme {
+  --color-dreamy-bg: #E8DCFF;
+  --color-dreamy-surface: #F3EEFF;
+  --color-dreamy-border: #D0BFFF;
+  --color-dreamy-text: #1A1A1A;
+  --color-dreamy-text-secondary: #5A4E72;
+  --color-dreamy-cta: #FFDE59;
+  --color-dreamy-cta-hover: #F5CE30;
+  --color-dreamy-accent: #9B5FE3;
+  --color-dreamy-success: #4ADE80;
+  --color-dreamy-overlay: rgba(90, 50, 130, 0.85);
+  --color-dreamy-overlay-light: rgba(90, 50, 130, 0.70);
+
+  --font-sans: "Nunito", sans-serif;
+  --font-display: "Quicksand", sans-serif;
+
+  --shadow-dreamy: 0 4px 20px rgba(155, 95, 227, 0.1);
+  --shadow-dreamy-lg: 0 10px 40px rgba(155, 95, 227, 0.15);
+  --shadow-dreamy-cta: 0 4px 16px rgba(255, 222, 89, 0.3);
+}

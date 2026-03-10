@@ -66,11 +66,11 @@ const StampItem: React.FC<StampItemProps> = ({ stamp, isDraggable, onPositionCha
   const getStyleClasses = (style: StampStyle) => {
     switch (style) {
       case 'Golden Record':
-        return 'text-amber-600 drop-shadow-[0_6px_10px_rgba(217,119,6,0.3)]';
+        return 'text-dreamy-cta drop-shadow-[0_6px_10px_rgba(255,222,89,0.4)]';
       case 'Jazz Lead Sheet':
-        return 'text-blue-700 font-bold italic';
+        return 'text-dreamy-accent font-bold italic';
       default:
-        return 'text-stone-800';
+        return 'text-dreamy-text';
     }
   };
 
@@ -101,13 +101,13 @@ const StampItem: React.FC<StampItemProps> = ({ stamp, isDraggable, onPositionCha
           }}
         />
       ) : (
-        <span className={`text-6xl leading-none ${stamp.style === 'Classical Manuscript' ? 'font-serif' : 'font-script'}`}>
+        <span className={`text-6xl leading-none font-display`}>
           {stamp.symbol}
         </span>
       )}
       
       {isDragging && (
-        <div className="absolute -top-12 left-1/2 -translate-x-1/2 bg-stone-900 text-white text-xs px-2 py-1 rounded-full uppercase tracking-widest whitespace-nowrap opacity-80 animate-bounce">
+        <div className="absolute -top-12 left-1/2 -translate-x-1/2 bg-dreamy-accent text-white text-xs px-2 py-1 rounded-full uppercase tracking-widest whitespace-nowrap opacity-80 animate-bounce">
           Positioning
         </div>
       )}
