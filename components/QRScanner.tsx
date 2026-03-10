@@ -13,32 +13,36 @@ const QRScanner: React.FC<QRScannerProps> = ({ onScan, onClose }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [error, setError] = useState<string | null>(null);
-  const [isScanning, setIsScanning] = useState(true);
+  const isScanningRef = useRef(true);
+  const onScanRef = useRef(onScan);
+  onScanRef.current = onScan;
 
   useEffect(() => {
     let stream: MediaStream | null = null;
     let animationId: number;
+    let cancelled = false;
 
     const startCamera = async () => {
       try {
-        stream = await navigator.mediaDevices.getUserMedia({ 
-          video: { facingMode: 'environment' } 
+        stream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: 'environment' }
         });
-        if (videoRef.current) {
-          videoRef.current.srcObject = stream;
-          videoRef.current.setAttribute("playsinline", "true");
-          videoRef.current.play().catch(e => console.log("Play aborted:", e));
-          requestAnimationFrame(tick);
-        }
+        if (cancelled || !videoRef.current) return;
+        videoRef.current.srcObject = stream;
+        videoRef.current.setAttribute("playsinline", "true");
+        await videoRef.current.play();
+        animationId = requestAnimationFrame(tick);
       } catch (err) {
-        setError("Unable to access camera. Please ensure you have given permission.");
-        console.error(err);
+        if (!cancelled) {
+          setError("Unable to access camera. Please ensure you have given permission.");
+          console.error(err);
+        }
       }
     };
 
     const tick = () => {
-      if (!isScanning) return;
-      
+      if (!isScanningRef.current || cancelled) return;
+
       if (videoRef.current && videoRef.current.readyState === videoRef.current.HAVE_ENOUGH_DATA) {
         const canvas = canvasRef.current;
         const video = videoRef.current;
@@ -54,8 +58,8 @@ const QRScanner: React.FC<QRScannerProps> = ({ onScan, onClose }) => {
             });
 
             if (code) {
-              setIsScanning(false);
-              onScan(code.data);
+              isScanningRef.current = false;
+              onScanRef.current(code.data);
               return;
             }
           }
@@ -67,12 +71,13 @@ const QRScanner: React.FC<QRScannerProps> = ({ onScan, onClose }) => {
     startCamera();
 
     return () => {
+      cancelled = true;
       if (stream) {
         stream.getTracks().forEach(track => track.stop());
       }
       cancelAnimationFrame(animationId);
     };
-  }, [onScan, isScanning]);
+  }, []);
 
   return (
     <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black bg-opacity-90 p-4">

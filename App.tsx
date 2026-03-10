@@ -48,7 +48,7 @@ const App: React.FC = () => {
     setIsLoading(true);
     
     const randomStyle = STAMP_STYLES[Math.floor(Math.random() * STAMP_STYLES.length)];
-    const lore = await generateStampLore(discoveredRoom.name, randomStyle);
+    const lore = generateStampLore(discoveredRoom.name, randomStyle);
     
     setPendingStamp({
       locationId: discoveredRoom.id,
