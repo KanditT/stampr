@@ -131,11 +131,43 @@ const App: React.FC = () => {
     if (!manuscriptRef.current) return;
     setNotification("กำลังวาดบทเพลงของคุณ...");
     try {
-      const dataUrl = await toPng(manuscriptRef.current, {
-        backgroundColor: "#FFFFFF",
-        pixelRatio: 3,
-      });
-      const link = document.createElement("a");
+      // Pre-load all stamp images as base64 so html-to-image doesn't miss them
+      const imgEls = manuscriptRef.current.querySelectorAll<HTMLImageElement>('img[src]');
+      const origSrcs: string[] = [];
+
+      await Promise.all(
+        Array.from<HTMLImageElement>(imgEls).map((img: HTMLImageElement, i: number) => {
+          origSrcs[i] = img.src;
+          return new Promise<void>((resolve) => {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            const tempImg = new Image();
+            tempImg.crossOrigin = 'anonymous';
+            tempImg.onload = () => {
+              canvas.width = tempImg.naturalWidth || 64;
+              canvas.height = tempImg.naturalHeight || 64;
+              ctx?.drawImage(tempImg, 0, 0);
+              try {
+                img.src = canvas.toDataURL('image/png');
+              } catch {
+                // keep original src if tainted
+              }
+              resolve();
+            };
+            tempImg.onerror = () => resolve();
+            tempImg.src = origSrcs[i];
+          });
+        })
+      );
+
+      // Call toPng twice — first pass caches fonts/resources, second renders correctly
+      await toPng(manuscriptRef.current, { backgroundColor: '#FFFFFF', pixelRatio: 3 });
+      const dataUrl = await toPng(manuscriptRef.current, { backgroundColor: '#FFFFFF', pixelRatio: 3 });
+
+      // Restore original srcs
+      Array.from<HTMLImageElement>(imgEls).forEach((img: HTMLImageElement, i: number) => { img.src = origSrcs[i]; });
+
+      const link = document.createElement('a');
       link.download = `Heart-of-Music-${Date.now()}.png`;
       link.href = dataUrl;
       link.click();
